@@ -13,6 +13,8 @@ from app import app,server
 import seaborn as sns
 
 
+application = app.server
+
 #layout rendu par l'application
 app.layout = html.Div([
     dcc.Location(id='url', refresh=True),

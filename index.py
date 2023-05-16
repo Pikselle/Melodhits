@@ -10,10 +10,7 @@ from pages.layout_emotions import layout_emotions
 from pages.layout_genres import layout_genres
 from pages.layout_pays import layout_pays
 from app import app,server
-import seaborn as sns
 
-
-application = app.server
 
 #layout rendu par l'application
 app.layout = html.Div([

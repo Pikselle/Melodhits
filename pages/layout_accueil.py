@@ -1,7 +1,6 @@
 from dash import dcc
 from dash import html
 import dash_bootstrap_components as dbc
-from components.functions import df_pc
 from datetime import date, timedelta
 from dash import dash_table
 from datetime import datetime as dt
@@ -45,5 +44,3 @@ body = dbc.Container([
 )
 
 layout_accueil =  html.Div([body],style={'background-color': 'white'})
-# layout_accueil=html.Div ([
-# ])

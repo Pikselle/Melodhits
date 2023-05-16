@@ -7,7 +7,7 @@ LOGO = "../assets/Melodhits-logo.png"
 elem = dbc.Navbar(
     [
         html.A(dbc.Row(
-            [   #logo
+            [   # Logo
                 dbc.Col(html.Img(src=LOGO, height="40px")),
                 dbc.Col(dbc.NavbarBrand("Melod'hits", className="ms-2")),
                 ]
@@ -22,9 +22,9 @@ navbar = dbc.Navbar(
             dbc.Row(
                 [
                     elem,
-                    #Navlink Acceuil
+                    # Navlink Acceuil
                     dbc.Col(dbc.NavLink("Accueil", href="/accueil",style={'color':'white'})),
-                    #Navlink dashbord
+                    # Navlink Autres pages
                     dbc.Col(dbc.NavLink("Evolution", href="/top100",style={'color':'white'})),
                     dbc.Col(dbc.NavLink("Artistes", href="/artistes",style={'color':'white'})),
                     dbc.Col(dbc.NavLink("Pays", href="/pays", style={'color': 'white'})),

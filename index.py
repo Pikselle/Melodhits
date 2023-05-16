@@ -12,14 +12,14 @@ from pages.layout_pays import layout_pays
 from app import app,server
 
 
-#layout rendu par l'application
+# Layout rendu par l'application
 app.layout = html.Div([
     dcc.Location(id='url', refresh=True),
     navbar,
     html.Div(id='page-content')
 ])
 
-#callback pour mettre à jour les pages
+# Callback de routage
 @app.callback(Output('page-content', 'children'),
               [Input('url', 'pathname')])
 def display_page(pathname):

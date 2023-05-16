@@ -1,0 +1,43 @@
+Le Notebook:
+
+-Importe les bibliothèques nécessaires :
+
+pandas : Une bibliothèque populaire pour la manipulation et l'analyse de données.
+glob : Un module permettant de rechercher des chemins de fichiers correspondant à un motif spécifié par des expressions régulières.
+-Utilise la fonction glob.glob pour rechercher tous les fichiers texte (*.txt) dans le répertoire /work/rap-lyrics/ et stocke les chemins des fichiers dans la liste file_list.
+
+-Extrait les noms des rappeurs à partir des chemins des fichiers en utilisant des opérations de manipulation de chaînes. Les noms des rappeurs sont extraits à partir des parties du chemin qui se trouvent après le dernier / et avant le premier _. Les noms extraits sont ensuite stockés dans la liste names.
+
+-Initialise une liste vide appelée rapper_text pour stocker les données des rappeurs.
+
+-Parcourt la liste file_list avec une boucle for et utilise enumerate pour obtenir à la fois l'index i et le chemin du fichier file_path.
+
+-Ouvre chaque fichier en utilisant open avec le mode de lecture ('r'). Le paramètre encoding est spécifié comme 'ISO-8859-1' pour s'assurer que le fichier est ouvert avec le bon encodage.
+
+-Lit le contenu du fichier avec f.read() et le stocke dans la variable lyrics.
+
+-Ajoute un tuple contenant le nom du rappeur (names[i]) et les paroles (lyrics) à la liste rapper_text.
+
+-Après avoir parcouru tous les fichiers, crée un DataFrame df à partir de la liste rapper_text avec les colonnes 'rapper' et 'text'.
+
+-Affiche les cinq premières lignes du DataFrame à l'aide de print(df.head()).
+
+-Importe à nouveau la bibliothèque pandas et le module glob.
+
+-Recherche à nouveau tous les fichiers texte (*.txt) dans le répertoire /work/rap-lyrics/ et met à jour la liste file_list.
+
+-Met à jour la liste names en extrayant les noms des rappeurs de la même manière que précédemment.
+
+-Initialise une nouvelle liste rapper_text.
+
+-Parcourt la liste file_list avec une boucle for et utilise enumerate pour obtenir l'index i et le chemin du fichier file_path.
+
+-Ouvre chaque fichier, lit son contenu et le stocke dans la variable lyrics.
+
+-Ajoute un tuple contenant le nom du rappeur (rapper), les paroles (lyrics) et le nombre de mots (n_words) à la liste rapper_text.
+
+-Après avoir parcouru tous les fichiers, crée un DataFrame df2 à partir de la liste rapper_text avec les colonnes 'rapper', 'text' et 'n_words'.
+
+-Effectue une modification spécifique dans la colonne 'rapper' du DataFrame df2 en utilisant la méthode replace.
+
+-Enregistre un  nouveau dataframe avec toutes les modifications apportées.

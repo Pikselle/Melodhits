@@ -1,0 +1,54 @@
+Ce code effectue le scraping de paroles de chansons à partir du site Genius.com en utilisant le package LyricsGenius. Il prétraite ensuite les paroles et les ajoute à un dataframe. Voici une documentation détaillée du code :
+
+-Installation des dépendances :
+
+-Installe le package LyricsGenius à partir du dépôt GitHub "https://github.com/johnwmillr/LyricsGenius.git" en utilisant la commande !pip install git+https://github.com/johnwmillr/LyricsGenius.git.
+-Importation des bibliothèques :
+
+os : Fournit une interface pour les fonctionnalités dépendantes du système d'exploitation.
+requests : Permet d'envoyer des requêtes HTTP.
+lyricsgenius : Fournit une interface pour accéder à l'API Genius pour récupérer les paroles de chansons.
+pandas : Fournit des structures de données et des outils d'analyse de données.
+numpy : Fournit des fonctions pour travailler avec des tableaux et des matrices multidimensionnels.
+json : Fournit des fonctionnalités pour travailler avec des données JSON.
+BeautifulSoup (alias bs) : Permet de parser et de naviguer dans des documents HTML.
+-Chargement du fichier de données :
+
+-Lit un fichier CSV appelé "TESTMERGE.csv" et le stocke dans un dataframe df.
+-Configuration de l'accès à l'API Genius :
+
+-Définit une clé d'accès client client_access_token pour se connecter à l'API Genius.
+-Crée une instance de l'objet LyricsGenius à partir de la clé d'accès client.
+-Configuration des paramètres de timeout pour éviter les problèmes de délai d'attente :
+
+-Définit le temps d'attente maximal à 30 secondes en utilisant LyricsGenius.timeout = 30.
+-Définit un délai de 5 secondes entre chaque requête avec LyricsGenius.sleep = 5.
+-Récupération de la première chanson :
+
+-Sélectionne la première chanson dans la colonne "Nom" du dataframe df.
+-Affiche le nom de la première chanson avec la phrase "Name of the first song in the database is: {sample_song}".
+-Recherche des paroles de la chanson :
+
+-Recherche les paroles de la chanson à l'aide de l'objet LyricsGenius en utilisant LyricsGenius.search_song(sample_song).
+-Affiche les paroles de la chanson avec la phrase "The lyric is:\n{searched_song.lyrics}".
+-Création d'un tableau pour stocker les paroles de chaque chanson :
+
+-Crée une liste vide appelée lyrics_arr pour stocker les paroles de chaque chanson.
+-Parcours du dataframe et prétraitement des paroles de chansons :
+
+-Parcourt chaque ligne du dataframe lyrics_df à l'aide d'une boucle for.
+-Récupère le titre de la chanson à partir de la colonne "Nom" avec song_title = lyrics_df.Nom.iloc[i].
+-Recherche les paroles de la chanson correspondante sur Genius.com avec `LyricsGenius.search_song(song_title)`.
+
+-Si les paroles de la chanson ne sont pas trouvées, ajoute une chaîne vide à la liste lyrics_arr et passe à la chanson suivante.
+-Si les paroles de la chanson sont trouvées, effectue les prétraitements suivants :
+-Remplace les sauts de ligne dans les paroles par ". " en utilisant lyric = lyric.replace("\n", ". ").
+-Supprime le caractère initial qui n'est pas une partie des paroles. Cette ligne est actuellement commentée : lyric = lyric[lyric.index('.') + 1 :].
+-Ajoute les paroles prétraitées à la liste lyrics_arr.
+-Ajout des paroles au dataframe :
+
+-Ajoute la liste lyrics_arr au dataframe df en créant une nouvelle colonne appelée "Lyrics" avec df['Lyrics'] = lyrics_arr.
+-Sauvegarde du dataframe sous forme de fichier CSV :
+
+Enregistre le dataframe df en tant que fichier CSV appelé "my_data.csv" en utilisant df.to_csv('my_data.csv', index=False).
+Cette séquence de code récupère les paroles de chaque chanson du dataframe d'origine, les prétraite et les ajoute à une nouvelle colonne "Lyrics" du dataframe. Enfin, le dataframe modifié est enregistré en tant que fichier CSV.

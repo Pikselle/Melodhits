@@ -1,0 +1,106 @@
+Ce code effectue différentes opérations sur un jeu de données de paroles de chansons.
+
+-Importation des bibliothèques :
+
+pandas : pour la manipulation des données tabulaires.
+numpy : pour les calculs numériques.
+seaborn : pour la visualisation des données.
+matplotlib.pyplot : pour la création de graphiques.
+string, os : pour la manipulation de chaînes de caractères et de fichiers.
+nltk : pour le traitement du langage naturel.
+re : pour les expressions régulières.
+keras : pour la création et l'entraînement de modèles d'apprentissage profond.
+random : pour la génération de nombres aléatoires.
+io : pour les opérations d'entrée/sortie.
+sys : pour l'accès aux fonctionnalités spécifiques du système.
+PIL : pour le traitement des images.
+wordcloud : pour la création de nuages de mots.
+-Lecture des données :
+Le code lit un fichier CSV ("my_data.csv") et stocke les données dans un DataFrame appelé "data".
+
+-Prétraitement des données :
+
+Suppression de certaines colonnes inutiles du DataFrame (Unnamed: 0.1, Genre, Annee, country_mb).
+Ajout de nouvelles colonnes contenant le nombre de caractères, de mots et de lignes dans chaque message ("Paroles").
+Affichage des statistiques descriptives du DataFrame.
+Fonction My_song(song) :
+-Cette fonction prend une chanson en entrée et génère une image contenant le texte de la chanson avec une mise en forme spécifique.
+
+Ouverture de l'image "Logo1.png".
+Chargement d'une police de caractères personnalisée ("DancingScript-VariableFont_wght.ttf").
+Détermination de la taille du texte à afficher.
+Placement du texte au centre de l'image.
+Retourne l'image modifiée.
+-Utilisation de la fonction My_song() :
+
+Sélection d'une chanson à partir du DataFrame ("data.Paroles[42]") et extraction des 500 premiers caractères.
+Appel de la fonction My_song() avec la chanson sélectionnée pour générer l'image modifiée.
+Affichage de l'image.
+-Construction du corpus :
+
+Concaténation de toutes les paroles de chansons dans une seule chaîne de caractères appelée "Corpus".
+Conversion de tous les caractères en minuscules.
+Affichage du nombre de caractères uniques dans le corpus.
+Affichage des caractères uniques présents dans le corpus.
+Suppression de certains symboles spécifiques de la chaîne de caractères.
+-Création d'un dictionnaire de correspondance :
+
+Tri des caractères uniques pour construire un vocabulaire.
+Calcul de la longueur du corpus et du vocabulaire.
+Construction de deux dictionnaires pour accéder au vocabulaire à partir des indices et vice versa.
+-Affichage des statistiques du corpus :
+
+Affichage du nombre total de caractères dans le corpus.
+Affichage du nombre de caractères uniques dans le corpus.
+-Préparation des données pour l'apprentissage :
+
+Définition de la longueur des séquences à utiliser (40 caractères).
+Création de listes "features" et "targets" pour stocker les séquences d'entrée et les cibles correspondantes.
+Pour chaque position dans le corpus, à partir de l'indice 0 jusqu'à la longueur du corpus moins la longueur de la séquence, les séquences de caractères de longueur 40 sont extraites comme données d'entrée et le caractère suivant est utilisé comme cible.
+Les séquences d'entrée sont converties en indices à l'aide du dictionnaire de correspondance "mapping".
+Les cibles sont également converties en indices.
+Les séquences d'entrée et les cibles sont ajoutées respectivement aux listes "features" et "targets".
+Le nombre total de séquences dans le corpus est affiché.
+-Réorganisation de X et normalisation :
+
+La liste "features" est remodelée en un tableau de dimensions (L_datapoints, length, 1) pour être compatible avec l'entrée du modèle LSTM.
+Les valeurs de X sont normalisées en les divisant par la longueur du vocabulaire (L_symb).
+-Encodage one-hot de la variable de sortie :
+
+Les cibles "targets" sont converties en encodage one-hot à l'aide de la fonction np_utils.to_categorical() de Keras.
+-Initialisation du modèle :
+
+Un modèle séquentiel est créé.
+-Ajout de couches :
+
+Une couche LSTM avec 256 unités est ajoutée en tant que couche d'entrée du modèle.
+Une couche Dense avec un nombre d'unités égal à la taille de la variable de sortie y est ajoutée, avec une activation softmax.
+-Compilation du modèle :
+
+L'optimiseur Adamax est utilisé avec un taux d'apprentissage de 0.01.
+La fonction de perte "categorical_crossentropy" est utilisée pour mesurer l'écart entre les prédictions et les cibles.
+-Résumé du modèle :
+
+Le modèle est résumé en affichant la liste des couches avec leurs paramètres.
+-Entraînement du modèle :
+
+Le modèle est entraîné sur les données d'entrée X et les cibles y.
+Un batch_size de 128 est utilisé et le modèle est entraîné pendant 100 epochs.
+-Sauvegarde du modèle :
+
+Le modèle est sauvegardé sous le nom "Lyrics_Generator.h5" pour une utilisation ultérieure.
+-Création d'un DataFrame d'historique :
+
+Les historiques des métriques de perte et de précision sont enregistrés dans un DataFrame "history_df" à partir de l'objet "history" renvoyé par la fonction fit().
+-Affichage du graphique d'apprentissage :
+
+Un graphique est créé pour représenter les évolutions de la perte d'entraînement au cours des epochs.
+-Définition de la fonction Lyrics_Generator() :
+
+Cette fonction permet de générer du texte à partir du modèle entraîné.
+Elle prend en entrée une chaîne de départ ("starter") et un nombre de caractères à générer ("Ch_count").
+La chaîne de départ est convertie en indices correspondant aux caractères du vocabulaire.
+La prédiction de chaque caractère suivant est effectuée en utilisant le modèle.
+Le caractère suivant est sélectionné en fonction de la prédiction et ajouté à la chaîne générée.
+La chaîne générée est mise à jour pour tenir compte du caractère ajouté et le processus est répété pour générer le texte souhaité.
+Le texte généré est retourné par la fonction.

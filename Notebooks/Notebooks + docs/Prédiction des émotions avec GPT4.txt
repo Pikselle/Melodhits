@@ -1,0 +1,34 @@
+Le code fourni effectue une analyse des émotions des paroles de chansons en utilisant l'API OpenAI. Voici une documentation détaillée :
+
+-Importation des bibliothèques :
+
+openai : une bibliothèque permettant d'accéder à l'API OpenAI.
+pandas : une bibliothèque pour la manipulation des données, utilisée pour traiter les paroles de chansons.
+-Configuration de l'API :
+
+openai.api_key : une clé d'API (à remplacer par la vraie clé) est configurée pour permettre l'accès à l'API OpenAI.
+-Boucle de prédiction d'émotion pour chaque paroles de chanson :
+
+-La boucle parcourt les paroles de chansons présentes dans la colonne "Paroles" du dataframe df.
+lyrics représente chaque ligne de paroles de chanson.
+-Définition du texte à analyser :
+
+-La variable text est initialisée avec la phrase "Cette chanson est " suivie des paroles de la chanson.
+-Appel de l'API pour prédire l'émotion :
+
+-La méthode openai.Completion.create() est utilisée pour envoyer une requête à l'API OpenAI et obtenir des prédictions d'émotion.
+-Les paramètres utilisés sont :
+engine="text-davinci-002" : spécifie le moteur de traitement du langage à utiliser.
+prompt=text : fournit le texte à analyser.
+max_tokens=1 : limite le nombre de tokens dans la réponse à un seul.
+n=1 : spécifie qu'une seule réponse est demandée.
+stop=None : ne spécifie pas de critère d'arrêt pour la réponse.
+temperature=0.7 : contrôle le degré d'aléatoire dans les réponses générées.
+-Extraction de l'émotion prédite :
+
+-La variable emotion est assignée à la première (et unique) réponse dans response.choices.
+-La méthode strip() est utilisée pour supprimer les espaces blancs autour de l'émotion prédite.
+-Affichage de l'émotion prédite :
+
+-L'émotion prédite est affichée à l'aide de la fonction print(emotion).
+Note : Le code fourni utilise une variable df pour représenter un dataframe contenant les paroles de chansons. Assurez-vous de définir correctement ce dataframe avant d'exécuter ce code.

@@ -1,0 +1,79 @@
+Ce code récupère des informations sur les pistes musicales à partir de l'API Spotify et les enregistre dans un fichier CSV. Voici une documentation détaillée du code :
+
+-Importation des bibliothèques :
+
+spotipy : Permet d'interagir avec l'API Spotify.
+SpotifyClientCredentials : Fournit une méthode d'authentification client pour l'API Spotify.
+SpotifyOAuth : Fournit une méthode d'authentification OAuth pour l'API Spotify.
+pandas : Fournit des structures de données et des outils d'analyse de données.
+numpy : Fournit des fonctions pour travailler avec des tableaux et des matrices multidimensionnels.
+datetime : Fournit des fonctionnalités pour travailler avec des dates et des heures.
+matplotlib.pyplot (alias plot) : Fournit des fonctionnalités pour créer des graphiques.
+seaborn : Fournit des fonctionnalités pour la visualisation de données basée sur matplotlib.
+-Configuration des informations d'identification Spotify :
+
+-Définit les variables cid et secret pour le client ID et le client secret respectivement.
+-Utilise SpotifyClientCredentials avec les informations d'identification pour obtenir un gestionnaire d'authentification client.
+-Crée une instance de l'objet Spotify en utilisant le gestionnaire d'authentification client.
+-Mesure du temps d'exécution initial :
+
+-Utilise timeit.default_timer() pour obtenir le temps de début d'exécution.
+-Récupération des informations sur les pistes :
+
+-Initialise des listes vides pour stocker les informations sur les artistes, les noms de piste, les identifiants de piste et la popularité.
+-Parcours les années de 2000 à 2022 à l'aide d'une boucle externe.
+-Pour chaque année, effectue une recherche de 50 pistes à la fois en utilisant l'objet Spotify et stocke les informations dans les listes correspondantes.
+-Mesure du temps d'exécution et affichage :
+
+-Utilise timeit.default_timer() pour obtenir le temps d'arrêt d'exécution.
+-Affiche le temps total d'exécution en soustrayant le temps de début du temps d'arrêt.
+-Affiche le nombre d'éléments dans la liste track_id en utilisant len(track_id).
+-Création du dataframe des pistes :
+
+-Crée un dataframe df_tracks à partir des listes artist_name, track_name, track_id et popularity.
+-Affiche la forme (nombre de lignes et de colonnes) du dataframe à l'aide de df_tracks.shape.
+-Affiche le dataframe df_tracks.
+-Suppression des doublons :
+
+-Groupe les entrées du dataframe par nom d'artiste et nom de piste en utilisant groupby() et compte les occurrences de chaque groupe avec size().
+-Compte le nombre de groupes ayant plus d'une occurrence avec grouped[grouped > 1].count().
+-Supprime les doublons du dataframe en utilisant drop_duplicates() sur les colonnes 'artist_name' et 'track_name'.
+-Effectue à nouveau le regroupement
+-Suppression des doublons (suite) :
+
+-Effectue à nouveau le regroupement des entrées du dataframe df_tracks par nom d'artiste et nom de piste en utilisant groupby() et size().
+-Compte le nombre de groupes ayant plus d'une occurrence après la suppression des doublons avec grouped_after_dropping[grouped_after_dropping > 1].count().
+-Mesure du temps d'exécution et affichage :
+
+-Utilise timeit.default_timer() pour obtenir le temps de début d'exécution.
+-Récupération des caractéristiques audio des pistes :
+
+-Initialise une liste vide rows pour stocker les caractéristiques audio des pistes.
+-Définit batchsize comme 100 pour traiter les pistes par lots.
+-Initialise un compteur None_counter pour suivre le nombre de pistes où aucune caractéristique audio n'est disponible.
+-Parcours les identifiants de piste dans le dataframe par lots.
+-Utilise l'objet Spotify pour récupérer les caractéristiques audio de chaque lot de pistes en utilisant sp.audio_features(batch).
+-Pour chaque caractéristique audio obtenue, si elle est None, incrémente le compteur None_counter, sinon ajoute les caractéristiques à la liste rows.
+-Affichage du nombre de pistes sans caractéristiques audio disponibles :
+
+-Affiche le nombre de pistes où aucune caractéristique audio n'a été trouvée en utilisant None_counter.
+-Mesure du temps d'exécution et affichage :
+
+-Utilise timeit.default_timer() pour obtenir le temps d'arrêt d'exécution.
+-Affiche le temps total d'exécution en soustrayant le temps de début du temps d'arrêt.
+-Création du dataframe des caractéristiques audio :
+
+-Crée un dataframe df_audio_features à partir de la liste rows contenant les caractéristiques audio.
+-Affiche la forme du dataframe à l'aide de df_audio_features.shape.
+-Affiche les premières lignes du dataframe à l'aide de df_audio_features.head().
+-Suppression des colonnes inutiles :
+
+-Définit la liste columns_to_drop contenant les noms des colonnes à supprimer : 'analysis_url', 'track_href', 'type' et 'uri'.
+-Utilise drop() pour supprimer les colonnes spécifiées du dataframe df_audio_features.
+-Affichage de la forme du dataframe final :
+
+-Affiche la forme mise à jour du dataframe à l'aide de df_audio_features.shape.
+-Sauvegarde du dataframe sous forme de fichier CSV :
+
+-Utilise to_csv() pour enregistrer le dataframe df en tant que fichier CSV nommé "Spotify2022.csv".
+Ce code récupère les informations sur les pistes musicales à partir de l'API Spotify, supprime les doublons, récupère les caractéristiques audio des pistes et enregistre les données dans un fichier CSV pour l'année 2022.

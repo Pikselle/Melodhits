@@ -1,0 +1,58 @@
+Le code fourni effectue plusieurs tâches de traitement automatique du langage naturel (TALN) en utilisant la bibliothèque Transformers. Voici une documentation expliquant chaque partie du code :
+
+-Importation des bibliothèques :
+
+from transformers import pipeline, AutoTokenizer, AutoModelForSequenceClassification : Importe les modules nécessaires pour utiliser les modèles pré-entraînés et les pipelines de Transformers.
+import pandas as pd : Importe la bibliothèque pandas pour travailler avec des données tabulaires.
+Chargement des modèles :
+
+classifier = pipeline('sentiment-analysis') : Charge un modèle pré-entraîné pour l'analyse de sentiment.
+summarizer = pipeline('summarization') : Charge un modèle pré-entraîné pour le résumé de texte.
+model_name = "distilbert-base-uncased-finetuned-sst-2-english" et model_revision = "af0f99b" : Spécifie le nom et la révision d'un modèle pré-entraîné pour la classification de séquences.
+tokenizer = AutoTokenizer.from_pretrained(model_name, revision=model_revision) : Charge le tokenizer associé au modèle de classification.
+model = AutoModelForSequenceClassification.from_pretrained(model_name, revision=model_revision) : Charge le modèle de classification de séquences.
+-Classification de sentiment :
+
+df = pd.read_csv('my_data.csv') : Charge un fichier CSV contenant des paroles de chansons dans un dataframe (df).
+df = df.dropna() : Supprime les lignes contenant des valeurs manquantes dans le dataframe.
+df['Sentiment'] = df['Paroles'].apply(lambda x: classifier(x)[0]['label']) : Applique le modèle de classification de sentiment à chaque paragraphe dans la colonne "Paroles" du dataframe et enregistre le sentiment correspondant dans une nouvelle colonne "Sentiment".
+-Résumé de texte :
+
+df['Summary'] = df['Paroles'].apply(lambda x: summarizer(x, max_length=50, min_length=10, do_sample=False)[0]['summary_text']) : Applique le modèle de résumé de texte à chaque paragraphe dans la colonne "Paroles" du dataframe et enregistre le résumé correspondant dans une nouvelle colonne "Summary".
+print(df) : Affiche le dataframe contenant les paroles, le sentiment et le résumé.
+-Division du dataframe :
+
+import numpy as np : Importe la bibliothèque numpy pour travailler avec des tableaux multidimensionnels.
+dfs = np.array_split(df, 100) : Divise le dataframe en 100 parties égales et les stocke dans un tableau multidimensionnel.
+-Résumé de texte avec un autre modèle :
+
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM : Importe les modules nécessaires pour utiliser un modèle de résumé différent.
+model_name = 't5-base' : Spécifie le nom d'un modèle de résumé différent.
+tokenizer = AutoTokenizer.from_pretrained(model_name) : Charge le tokenizer associé au nouveau modèle de résumé.
+model = AutoModelForSeq2SeqLM.from_pretrained(model_name) : Charge le modèle de résumé.
+
+-Résumé de texte avec un autre modèle :
+
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM : Importe les modules nécessaires pour utiliser un modèle de résumé différent.
+model_name = 't5-base' : Spécifie le nom d'un modèle de résumé différent.
+tokenizer = AutoTokenizer.from_pretrained(model_name) : Charge le tokenizer associé au nouveau modèle de résumé.
+model = AutoModelForSeq2SeqLM.from_pretrained(model_name) : Charge le modèle de résumé.
+-Fonction de résumé de texte :
+
+def summarizer(text) : Définit une fonction appelée "summarizer" qui prend un texte en entrée.
+-À l'intérieur de la fonction :
+inputs = tokenizer.encode(text, return_tensors='pt', max_length=max_length, truncation=True) : Tokenise le texte en utilisant le tokenizer et convertit les tokens en tenseurs PyTorch. La longueur maximale des tokens est spécifiée par "max_length", et le texte est tronqué si nécessaire.
+outputs = model.generate(inputs) : Génère un résumé à partir des tokens d'entrée en utilisant le modèle de résumé.
+summary = tokenizer.decode(outputs[0], skip_special_tokens=True) : Décodage du résumé généré à partir des tokens en texte lisible par l'homme.
+return summary : Retourne le résumé généré.
+-Prétraitement du texte :
+
+import re : Importe le module de expressions régulières.
+def preprocess_text(text) : Définit une fonction appelée "preprocess_text" qui prend un texte en entrée pour le prétraiter.
+À l'intérieur de la fonction :
+text = text.encode('ascii', 'ignore').decode() : Supprime les caractères non-ASCII du texte.
+text = re.sub(r'http\S+', '', text) : Supprime les URL du texte.
+text = re.sub(r'[^a-zA-Z0-9\s]', '', text) : Supprime les caractères non alphanumériques du texte.
+return text : Retourne le texte prétraité.
+-Prétraitement des paroles de chansons :
+df['Paroles'] = df['Paroles'].apply(preprocess_text) : Applique la fonction de prétraitement du texte à chaque paragraphe dans la colonne "Paroles" du dataframe afin de nettoyer les paroles.

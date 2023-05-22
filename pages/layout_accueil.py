@@ -5,6 +5,7 @@ from datetime import date, timedelta
 from dash import dash_table
 from datetime import datetime as dt
 
+LOGO = "../assets/Logo-melodhit.png"
 
 
 body = dbc.Container([
@@ -32,7 +33,8 @@ body = dbc.Container([
 
                                 style={"color": "#000406"},
 
-                            )
+                            ),
+                            html.Img(src=LOGO, height="400px")
                         ]
 
                          )

@@ -2,14 +2,14 @@ import dash
 import dash_bootstrap_components as dbc
 from dash import html
 
-LOGO = "../assets/Melodhits-logo.png"
+LOGO = "../assets/Logo-melodhit.png"
 
 elem = dbc.Navbar(
     [
         html.A(dbc.Row(
             [   # Logo
-                dbc.Col(html.Img(src=LOGO, height="40px")),
-                dbc.Col(dbc.NavbarBrand("Melod'hits", className="ms-2")),
+                dbc.Col(html.Img(src=LOGO, height="50px")),
+                dbc.Col(dbc.NavbarBrand("Melod'hit", className="ms-2")),
                 ]
         ))],
     color="dark",

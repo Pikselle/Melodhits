@@ -15,7 +15,7 @@ body = dbc.Container([
 
                     html.Div(
                         [   html.Br([]),
-                            html.H5("Bienvenue sur Melod'hits!",style={'color':'red','backgroundColor':'white'}),
+                            html.H5("Bienvenue sur Melod'hit!",style={'color':'red','backgroundColor':'white'}),
                             html.Br([]),
                             html.P(
                                 "\

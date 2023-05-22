@@ -9,6 +9,7 @@ from pages.layout_artistes import layout_artistes
 from pages.layout_emotions import layout_emotions
 from pages.layout_genres import layout_genres
 from pages.layout_pays import layout_pays
+from pages.layout_generation import layout_generation
 from app import app,server
 
 
@@ -35,6 +36,8 @@ def display_page(pathname):
         return layout_genres,
     elif pathname=='/emotions':
         return layout_emotions,
+    elif pathname=='/generation':
+        return layout_generation,
 
 
 if __name__ == '__main__':

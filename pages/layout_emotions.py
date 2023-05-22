@@ -8,12 +8,20 @@ import time
 from components.functions import df_genres
 import dash
 import dash_bootstrap_components as dbc
-
+from dash.dependencies import Input, Output
 
 ######################## Fonctions de créations des KPI  ########################
 
 # Couleurs des KPI
 color_l=['info',"secondary",'info',"secondary","success","warning","danger"]
+
+'''ALLOWED_TYPES = (
+    "text", "number", "password", "email", "search",
+    "tel", "url", "range", "hidden",
+)'''
+ALLOWED_TYPES = (
+    "text", "number"
+)
 
 def create_card(title, content,color):
     card = dbc.Card(
@@ -54,16 +62,28 @@ radio_item=dcc.Dropdown(
     id='dropdown-publishing'
 )
 
-filtre_label =html.H2("Selectionne une année : ",style={'color':'#ffff'})
-filtre_line = dbc.Row([dbc.Col(filtre_label , lg=3,width=6), dbc.Col(radio_item, lg=6, width=6)])
+input_item = dcc.Input(
+            id="input_word",
+            placeholder="Choisis le thème",
+        )
+
+filtre_label =html.H2("Choisis le thème : ",style={'color':'#ffff'})
+filtre_line = dbc.Row([dbc.Col(filtre_label , lg=3,width=6), dbc.Col(input_item, lg=6, width=6)])
 
 
 ######################## Fin du dropdown  ########################
 ######################## Création des visualisations  ########################
 
-graph=dcc.Graph(id='genresGraph')
+graph=dcc.Graph(id='paroles')
 piegraph = dcc.Graph(id='paysGraph')
 graph_line =  dbc.Row([dbc.Col(graph, lg=8), dbc.Col(piegraph, lg=4)])
+
+ParolesGenerees = html.Div(
+        className="trend",
+        children=[
+            dbc.Alert("", color="info", id='paroles')
+
+        ], )
 
 ######################## Footer  ########################
 footer =dbc.Row(
@@ -88,4 +108,4 @@ elemTitre = html.H2("Emotions", style={'color':'#ffff'})
 
 elemConstruction = html.Div("PAGE EN CONSTRUCTION", style={"font-size":"32px", "color" : "white", "margin-bottom":"300px"})
 #layout_emotions = html.Div([html.Br(),elemTitre, html.Br(),card, html.Br(), filtre_line,html.Br(), graph_line,html.Br(),footer],style={"background-color":'black',"height": "100%", "min-height":"100vh","padding":"10px"})
-layout_emotions = html.Div([html.Br(),elemTitre, html.Br(),elemConstruction,footer],style={"background-color":'black',"height": "100%", "min-height":"100vh","padding":"10px"})
+layout_emotions = html.Div([html.Br(),elemTitre, html.Br(),elemConstruction, html.Br(),footer],style={"background-color":'black',"height": "100%", "min-height":"100vh","padding":"10px"})

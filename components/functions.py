@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import plotly.express as px
+from components.MarkovLyricsGenerator import MarkovLyricsGenerator
 
 
 
@@ -14,6 +15,7 @@ df_genres = pd.read_csv('data/PaysComplet.csv', sep=',')
 df_artistes = df_genres.copy().sort_values(by=['Artiste'])
 df_pays = df_genres.copy().sort_values(by=['Pays'])
 df_genres_propre = df_genres.copy().sort_values(by=['Genre'])
+df_paroles = pd.read_csv('data/my_data.csv')
 
 
 ######################## Fonctions de mise à jour des Graphs page Année  ########################
@@ -196,3 +198,16 @@ def update_test():
     return fig
 
 ######################## Fin de Fonctions de test  ########################
+def update_paroles(theme) :
+    # Concaténer toutes les paroles en un seul texte
+    corpus_paroles = ' '.join(df_paroles['Paroles'])
+
+    # Création de l'instance de MarkovLyricsGenerator avec le corpus de paroles
+    kanyai = MarkovLyricsGenerator(corpus=corpus_paroles, order=2, length=8)
+
+    # Génération d'une chanson avec 10 lignes de longueurs aléatoires entre 5 et 10 mots
+    chanson = kanyai.gen_song(lines=10, length_range=[5, 10], startswith=theme)
+
+    # Affichage de la chanson générée
+    return chanson
+

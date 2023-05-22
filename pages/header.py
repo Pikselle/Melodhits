@@ -30,6 +30,7 @@ navbar = dbc.Navbar(
                     dbc.Col(dbc.NavLink("Pays", href="/pays", style={'color': 'white'})),
                     dbc.Col(dbc.NavLink("Genres", href="/genres",style={'color':'white'})),
                     dbc.Col(dbc.NavLink("Emotions", href="/emotions",style={'color':'white'})),
+                    dbc.Col(dbc.NavLink("Génération", href="/generation", style={'color': 'white'})),
                 ],
                 align="center",
                 className="g-0",

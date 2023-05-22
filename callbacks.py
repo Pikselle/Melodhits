@@ -6,7 +6,7 @@ from datetime import date, timedelta
 from dash import html
 from components.functions import update_genres, update_pays, \
     update_artiste_top, update_artiste_genre, update_pays_genre, update_pays_top, update_liste_artistes, \
-    update_genre_top, update_genre_pays, update_liste_artistesG, update_test
+    update_genre_top, update_genre_pays, update_liste_artistesG, update_test, update_paroles
 
 
 ######################## Callbacks page Evolution ########################
@@ -106,3 +106,11 @@ def update_output_div2(value):
 def update_output_div2(value):
     graph = update_test()
     return graph
+
+@app.callback(
+    Output(component_id='paroles', component_property='children'),
+    Input(component_id='input_word', component_property='value')
+)
+def update_paroles_generation(value):
+    graph = update_paroles(value).split('\n')
+    return html.Ul([html.Li(x) for x in graph])
